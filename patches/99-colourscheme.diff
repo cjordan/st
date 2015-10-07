@@ -1,0 +1,50 @@
+diff --git a/config.def.h b/config.def.h
+index 860ce3d..2579bd1 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -70,24 +70,24 @@ static unsigned int tabspaces = 8;
+ /* Terminal colors (16 first used in escape sequence) */
+ static const char *colorname[] = {
+ 	/* 8 normal colors */
+-	"black",
+-	"red3",
+-	"green3",
+-	"yellow3",
+-	"blue2",
+-	"magenta3",
+-	"cyan3",
+-	"gray90",
++	"#222222",
++	"#b10000",
++	"#6cb100",
++	"#b15c00",
++	"#005577",
++	"#5600b1",
++	"#007177",
++	"#bbbbbb",
+ 
+ 	/* 8 bright colors */
+-	"gray50",
+-	"red",
+-	"green",
+-	"yellow",
+-	"#5c5cff",
+-	"magenta",
+-	"cyan",
+-	"white",
++	"#444444",
++	"#cc0000",
++	"#7ccc00",
++	"#cc6a00",
++	"#0075a3",
++	"#6300cc",
++	"#009199",
++	"#eeeeee",
+ 
+ 	[255] = 0,
+ 
+@@ -416,4 +416,3 @@ static Key key[] = {
+ static uint selmasks[] = {
+ 	[SEL_RECTANGULAR] = Mod1Mask,
+ };
+-
