@@ -1,6 +1,6 @@
 pkgname=st-git
 _pkgname=st
-pkgver=20151006.293f573
+pkgver=20151011.f56c58a
 pkgrel=1
 pkgdesc='Simple virtual terminal emulator for X'
 url='http://git.suckless.org/st/'
@@ -42,11 +42,11 @@ prepare() {
         -e 's/CFLAGS =/CFLAGS +=/g' \
         -e 's/LDFLAGS =/LDFLAGS +=/g' \
         -e 's/_BSD_SOURCE/_DEFAULT_SOURCE/' \
+        -e 's/-Os/-O2/g' \
+        -e 's/# CC = cc/CC = clang/g' \
         -i config.mk
     sed '/@tic/d' -i Makefile
 
-    sed -i 's/# CC = cc/CC = clang/g' config.mk
-    sed -i 's/-Os/-O2/g' config.mk
     # Fix st terminfo colliding with ncurses-6
     sed \
         -e 's/st-/st-git-/g' \
