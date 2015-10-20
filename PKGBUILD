@@ -21,22 +21,13 @@ pkgver() {
 
 prepare() {
     cd "${srcdir}/${_pkgname}"
+    cp config.def.h config.h
     for p in ../../patches/{0..9}*.diff; do
         [ -f $p ] || continue
         echo "=> $p"
-        # patch < $p || return 1
-        patch < $p
+        patch < $p || return 1
     done
 
-    cp config.def.h config.h
-    sed \
-        -e '/char font/s/= .*/= "Terminus:pixelsize=12";/' \
-        -e '/int xfps/s/= .*/= 60;/' \
-        -e '/char termname/s/= .*/= "st-git-256color";/' \
-        -e '/int tabspaces/s/= .*/= 4;/' \
-        -e '/int defaultfg/s/= .*/= 15;/' \
-        -e '/int defaultcs/s/= .*/= 3;/' \
-        -i config.h
     sed \
         -e 's/CPPFLAGS =/CPPFLAGS +=/g' \
         -e 's/CFLAGS =/CFLAGS +=/g' \
