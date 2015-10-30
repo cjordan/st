@@ -21,12 +21,12 @@ pkgver() {
 
 prepare() {
     cd "${srcdir}/${_pkgname}"
-    cp config.def.h config.h
     for p in ../../patches/{0..9}*.diff; do
         [ -f $p ] || continue
         echo "=> $p"
         patch < $p || return 1
     done
+    cp config.def.h config.h
 
     sed \
         -e 's/CPPFLAGS =/CPPFLAGS +=/g' \
