@@ -1,13 +1,13 @@
 pkgname=st-git
 _pkgname=st
-pkgver=20151011.f56c58a
+pkgver=20151121.375b287
 pkgrel=1
-pkgdesc='Simple virtual terminal emulator for X'
+pkgdesc='A simple virtual terminal emulator for X.'
 url='http://git.suckless.org/st/'
 arch=('i686' 'x86_64' 'armv7h')
 license=('MIT')
-depends=('libxft')
-makedepends=('ncurses' 'libxext' 'git')
+depends=('libxft' 'libxext')
+makedepends=('ncurses' 'git')
 source=('git://git.suckless.org/st')
 sha1sums=('SKIP')
 
@@ -36,13 +36,9 @@ prepare() {
         -e 's/-Os/-O2/g' \
         -e 's/# CC = cc/CC = clang/g' \
         -i config.mk
-    sed '/@tic/d' -i Makefile
 
-    # Fix st terminfo colliding with ncurses-6
-    sed \
-        -e 's/st-/st-git-/g' \
-        -e 's/st|/st-git|/g' \
-        -i st.info
+    # skip terminfo which conflicts with ncurses
+    sed -i '/\@tic /d' Makefile
 }
 
 build() {
@@ -52,8 +48,7 @@ build() {
 
 package() {
     cd "${srcdir}/${_pkgname}"
-    make PREFIX=/usr DESTDIR="${pkgdir}" install
+    make PREFIX=/usr DESTDIR="${pkgdir}" TERMINFO="${pkgdir}/usr/share/terminfo" install
     install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     install -Dm644 README "${pkgdir}/usr/share/doc/${pkgname}/README"
-    tic -s -o "${pkgdir}/usr/share/terminfo" st.info
 }
